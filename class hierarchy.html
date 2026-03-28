@@ -1,0 +1,84 @@
+import React from "react";
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  introduce() {
+    return `Hello, my name is ${this.name}.`;
+  }
+}
+ 
+class Student extends Person {
+  constructor(name, age, major) {
+    super(name, age);
+    this.major = major;
+  }
+  introduce() {
+    return `Hi! I'm ${this.name} and I study ${this.major}.`;
+  }
+}
+ 
+class Teacher extends Person {
+  constructor(name, age, subject) {
+    super(name, age);
+    this.subject = subject;
+  }
+  introduce() {
+    return `Hello, I'm ${this.name} and I teach ${this.subject}.`;
+  }
+}
+const people = [
+  new Person("Alex Johnson", 30),
+  new Student("Emma Watson", 20, "Computer Science"),
+  new Teacher("Dr. James Wilson", 45, "Mathematics"),
+];
+function App() {
+  return (
+    <div style={{ padding: "40px", background: "#f0f0f0", minHeight: "100vh", fontFamily: "Arial" }}>
+      <h1 style={{ textAlign: "center" }}>Person Class Hierarchy</h1>
+ 
+      {people.map((person, i) => (
+        <div key={i} style={{
+          background: "#fff",
+          border: "1px solid #ddd",
+          borderRadius: "10px",
+          padding: "20px",
+          maxWidth: "600px",
+          margin: "0 auto 16px",
+        }}>
+          {/* Name + Type Badge */}
+          <h2 style={{ margin: "0 0 8px" }}>
+            {person.name}{" "}
+            <span style={{
+              fontSize: "13px",
+              background:
+                person instanceof Student ? "#dbeafe" :
+                person instanceof Teacher ? "#dcfce7" : "#f3f4f6",
+              color:
+                person instanceof Student ? "#1d4ed8" :
+                person instanceof Teacher ? "#15803d" : "#374151",
+              padding: "2px 10px",
+              borderRadius: "999px",
+            }}>
+              {person instanceof Student ? "Student" :
+               person instanceof Teacher ? "Teacher" : "Person"}
+            </span>
+          </h2>
+ 
+          {/* Common */}
+          <p><b>Age:</b> {person.age}</p>
+          <p style={{ fontStyle: "italic", color: "#555" }}>{person.introduce()}</p>
+ 
+          {/* Student only */}
+          {person instanceof Student && <p><b>Major:</b> {person.major}</p>}
+ 
+          {/* Teacher only */}
+          {person instanceof Teacher && <p><b>Subject:</b> {person.subject}</p>}
+        </div>
+      ))}
+    </div>
+  );
+}
+ 
+export default App;
